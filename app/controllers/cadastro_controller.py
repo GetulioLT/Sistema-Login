@@ -17,10 +17,12 @@ def cadastro_in():
         "password": password
     }
 
-    # Faz uma requisição para cadastrar o usuário
+    # Fazendo uma requisição POST para cadastrar o usuário
     cadastro_response = requests.post("http://localhost:5001/user", json=data)
     try:
         cadastro_response.json()["email"]
-        return redirect(url_for('login'))
+        # Redirecionando para a rota '/login' se o cadastro for bem-sucedido
+        return redirect(url_for('login'))  
     except Exception as e:
-        return redirect(url_for('cadastro'))
+        # Redirecionando para a rota '/cadastro' se o cadastro falhar
+        return redirect(url_for('cadastro'))  

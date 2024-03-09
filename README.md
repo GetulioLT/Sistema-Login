@@ -55,7 +55,7 @@ python app.py
 Para executar o frontend, você precisará executar o arquivo app.py na pasta raiz do projeto. Faça isso em um terminal diferente do que você usou para a API. Aqui está o comando:
 
 ```bash
-python app.py
+flask run
 ```
 
 ## 7. Acessando a Aplicação
