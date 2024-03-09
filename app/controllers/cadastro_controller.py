@@ -1,11 +1,8 @@
 # app/controllers/cadastro_controller.py
-from flask import render_template, request, redirect, url_for
+from flask import request, redirect, url_for
 from app import app
 import requests
 
-@app.route('/cadastro')
-def cadastro():
-    return render_template('cadastro.html')
 
 @app.route("/cadastro-in", methods=["POST"])
 def cadastro_in():

@@ -1,13 +1,10 @@
 # app/controllers/login_controller.py
-from flask import render_template, request, redirect, url_for
+from flask import request, redirect, url_for
 from flask_login import login_user  # Importando a função login_user do flask_login
 from app import app
 from app.models.user import User  # Importando a classe User
 import requests
 
-@app.route('/login')
-def login():
-    return render_template('login.html')  # Renderizando a página de login
 
 @app.route("/login-in", methods=["POST"])
 def login_in():

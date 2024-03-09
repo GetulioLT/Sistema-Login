@@ -11,6 +11,8 @@ login_manager.init_app(app)  # Inicializando o gerenciador de login com a aplica
 login_manager.user_loader(load_user)  # Definindo a função que carrega um usuário
 
 from app.controllers import cadastro_controller, home_controller, login_controller  # Importando os controladores
+from app.views import cadastro_view, login_view, home_view  # Importando as views
+
 
 @app.route('/')  # Definindo a rota raiz da aplicação
 def index():
