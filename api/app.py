@@ -2,52 +2,51 @@
 from apiflask import APIFlask, Schema, abort
 from apiflask.fields import Integer, String
 from apiflask.validators import Length
-
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
-
+from sqlalchemy.exc import IntegrityError
 from flask_httpauth import HTTPBasicAuth
 
-# Inicializando a aplicação Flask
+# Criando uma instância da classe APIFlask
 app = APIFlask(__name__)
-# Configurando a URI do banco de dados
+
+# Configurando a URI do banco de dados e desativando o rastreamento de modificações do SQLAlchemy
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///user.sqlite'
 # Desativando o rastreamento de modificações do SQLAlchemy
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
-# Inicializando o SQLAlchemy e o Migrate
+# Inicializando o SQLAlchemy e o Migrate com a aplicação
 db = SQLAlchemy(app)
 migrate = Migrate(app, db)
 
-# Inicializando a autenticação HTTP Basic
+# Criando uma instância da classe HTTPBasicAuth
 auth = HTTPBasicAuth()
 
-# Função para verificar a senha
+# Definindo a função de verificação de senha para a autenticação básica HTTP
 @auth.verify_password
 def verify_password(username, password):
-    # Se o usuário e a senha forem 'admin', retorna True
     if username == 'admin' and password == 'admin':
         return True
     return False
 
-# Esquema para validação de entrada de dados do usuário
+# Definindo o esquema de entrada de dados do usuário
 class UserIn(Schema):
     email = String(required=True, validate=Length(10, 50))
     password = String(required=True, validate=Length(8, 24))
 
-# Esquema para formatação de saída de dados do usuário
+# Definindo o esquema de saída de dados do usuário
 class UserOut(Schema):
     id = Integer()
     email = String()
     password = String()
 
-# Modelo de usuário para o SQLAlchemy
+# Definindo o modelo de usuário para o SQLAlchemy
 class User(db.Model):
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     email = db.Column(db.String(80), unique=True, nullable=False)
     password = db.Column(db.String(120), nullable=False)
 
-# Rota para cadastrar um usuário
+# Definindo a rota para cadastrar um usuário
 @app.post('/user')
 @app.input(UserIn)
 @app.output(UserOut)
@@ -58,11 +57,10 @@ def cadastrar(json_data):
         db.session.add(user)
         db.session.commit()
         return user, 201
-    except Exception as e:
-        # Se ocorrer um erro, aborta a requisição e retorna uma mensagem de erro
-        return abort(400, message=f"Email já cadastrado,\n {e}")
+    except IntegrityError:
+        return abort(400, message="Email já cadastrado")
 
-# Rota para obter informações de um usuário pelo email
+# Definindo a rota para obter informações de um usuário pelo email
 @app.get('/user/<email>')
 @app.output(UserOut)
 def get_user(email):
@@ -73,7 +71,7 @@ def get_user(email):
         return abort(404, message="Usuário não encontrado")
     return user, 200
 
-# Rota para reiniciar o banco de dados
+# Definindo a rota para reiniciar o banco de dados
 @app.get('/reset-db')
 @auth.login_required
 def reset_db():
@@ -82,6 +80,6 @@ def reset_db():
     db.create_all()
     return "Banco de dados reiniciado com sucesso", 200
 
-# Inicia a aplicação
+# Iniciando a aplicação
 if __name__ == '__main__':
     app.run(debug=True, port=5001)
