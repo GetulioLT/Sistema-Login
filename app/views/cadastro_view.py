@@ -1,3 +1,4 @@
+# app/views/cadastro_view.py
 from app import app
 from flask import render_template
 

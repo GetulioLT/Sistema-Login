@@ -1,3 +1,4 @@
+# app/views/home_view.py
 from app import app
 from flask import render_template
 from flask_login import login_required  # Importando a função login_required do flask_login
