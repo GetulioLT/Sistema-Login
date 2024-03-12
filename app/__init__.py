@@ -4,8 +4,8 @@ from flask_login import LoginManager, UserMixin
 
 # Inicializando a aplicação Flask
 app = Flask(__name__)
-# Definindo a chave secreta para a sessão
-app.secret_key = "jason"
+# Definindo a chave secreta para a sessão a partir de uma variável de ambiente
+app.secret_key = "JaSoN"
 
 # Inicializando o gerenciador de login
 login_manager = LoginManager()
@@ -25,9 +25,9 @@ def load_user(user_id):
     return User(user_id)
 
 # Importando os blueprints para as rotas de login, cadastro e home
-from .login import login as login_blueprint
-from .cadastro import cadastro as cadastro_blueprint
-from .home import home as home_blueprint
+from .login import loginBlue as login_blueprint
+from .cadastro import cadastroBlue as cadastro_blueprint
+from .home import homeBlue as home_blueprint
 
 # Registrando os blueprints na aplicação Flask
 # Isso conecta as rotas definidas nos blueprints à aplicação
