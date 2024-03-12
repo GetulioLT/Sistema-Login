@@ -1,17 +1,9 @@
 # 🚀 Configuração do Projeto
 
 ## 📚 Explicações
-Este projeto foi criado com o objetivo de compartilhar conhecimentos sobre Flask. Ele inclui a criação de uma página de login e cadastro de usuários, uma API para manipulação de dados, e utiliza SQLite para armazenar os dados dos usuários. Para estilização, foi usado o framework TailwindCSS.
+Seguindo agora na branch mvc, foi feita a separação do projeto em camadas, onde a camada de model é responsável por toda a lógica de negócio, a camada de view é responsável por toda a interação com o usuário e a camada de controller é responsável por intermediar a comunicação entre a camada de model e a camada de view.
 
-Além disso, o projeto explora conceitos de arquitetura de software, como MVC e Blueprints. Para demonstrar a diferença entre eles, foram criadas três branches paralelas:
-
-- [Blueprint](https://github.com/GetulioLT/Sistema-Login/tree/blueprints)
-- [MVC](https://github.com/GetulioLT/Sistema-Login/tree/mvc)
-- [MVC-Blueprint](https://github.com/GetulioLT/Sistema-Login/tree/mvc-blueprint)
-
-Cada branch tem o objetivo de mostrar uma abordagem diferente de arquitetura e organização de código.
-
-O guia a seguir irá ajudá-lo a configurar e testar o projeto em sua máquina.
+O guia a seguir segue o mesmo da branch main, com a diferença de que agora o projeto está separado em camadas.
 
 ## 🛠️ Pré-requisitos
 Certifique-se de ter o Python, pip e o git instalados em seu sistema.
