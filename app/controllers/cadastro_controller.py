@@ -4,6 +4,7 @@ import requests
 
 cadastroBlue = Blueprint("cadastroBlue", __name__)
 
+# Definindo a rota para fazer cadastro
 @cadastroBlue.route("/cadastro-in", methods=["POST"])
 def cadastro_in():
     email = request.form["email"]
@@ -15,11 +16,8 @@ def cadastro_in():
     }
 
     # Fazendo uma requisição POST para cadastrar o usuário
-    cadastro_response = requests.post("http://localhost:5001/user", json=data)
-    try:
-        cadastro_response.json()["email"]
-        # Redirecionando para a rota '/login' se o cadastro for bem-sucedido
-        return redirect(url_for('loginBlue.login'))  
-    except Exception as e:
-        # Redirecionando para a rota '/cadastro' se o cadastro falhar
-        return redirect(url_for('cadastroBlue.cadastro'))  
+    response = requests.post("http://localhost:5001/user", json=data)
+    if response.status_code == 201:
+        return redirect(url_for('loginBlue.login'))
+    else:
+        return redirect(url_for('cadastroBlue.cadastro'))

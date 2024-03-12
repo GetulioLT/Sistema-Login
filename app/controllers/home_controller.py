@@ -4,8 +4,9 @@ from flask_login import login_required, logout_user  # Importando as funções n
 
 homeBlue = Blueprint('homeBlue', __name__)  # Criando uma instância da classe Blueprint
 
+# Definindo a rota para fazer logout
 @homeBlue.route('/logout')
-@login_required  # A rota '/logout' requer que o usuário esteja logado
+@login_required
 def logout():
-    logout_user()  # Fazendo logout do usuário
-    return redirect(url_for('loginBlue.login'))  # Redirecionando o usuário para a página de login após o logout
+    logout_user()
+    return redirect(url_for('loginBlue.login'))

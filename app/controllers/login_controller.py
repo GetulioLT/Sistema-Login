@@ -6,19 +6,16 @@ import requests
 
 loginBlue = Blueprint("loginBlue", __name__)  # Criando uma instância da classe Blueprint
 
+# Definindo a rota para fazer login
 @loginBlue.route("/login-in", methods=["POST"])
 def login_in():
     email = request.form["email"]
 
-    # Fazendo uma requisição GET para verificar se o usuário existe
-    login_response = requests.get(f"http://localhost:5001/user/{email}")
-
-    try:
-        email = login_response.json()["email"]
-
-        user = User(email)  # Criando uma instância da classe User
-        login_user(user)  # Fazendo login do usuário
-
-        return redirect(url_for('homeBlue.home'))  # Redirecionando para a página inicial se o login for bem-sucedido
-    except Exception as e:
-        return redirect(url_for('loginBlue.login'))  # Redirecionando para a página de login se o login falhar
+    # Fazendo uma requisição GET para obter informações do usuário
+    response = requests.get(f"http://localhost:5001/user/{email}")
+    if response.status_code == 200:
+        user = User(email)
+        login_user(user)
+        return redirect(url_for('homeBlue.home'))
+    else:
+        return redirect(url_for('loginBlue.login'))
