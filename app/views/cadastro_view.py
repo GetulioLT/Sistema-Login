@@ -1,7 +1,7 @@
-from app import app
+from app.controllers.cadastro_controller import cadastroBlue
 from flask import render_template
 
 
-@app.route('/cadastro')
+@cadastroBlue.route('/cadastro')
 def cadastro():
     return render_template('cadastro.html')

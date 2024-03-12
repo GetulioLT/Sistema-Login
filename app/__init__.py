@@ -14,6 +14,15 @@ from app.controllers import cadastro_controller, home_controller, login_controll
 from app.views import cadastro_view, login_view, home_view  # Importando as views
 
 
+from .controllers.cadastro_controller import cadastroBlue  # Importando a instância da classe Blueprint do controlador cadastro_controller  
+from .controllers.home_controller import homeBlue  # Importando a instância da classe Blueprint do controlador home_controller  
+from .controllers.login_controller import loginBlue  # Importando a instância da classe Blueprint do controlador login_controller4
+
+
+app.register_blueprint(cadastroBlue)  # Registrando a instância da classe Blueprint do controlador cadastro_controller  
+app.register_blueprint(homeBlue)  # Registrando a instância da classe Blueprint do controlador home_controller
+app.register_blueprint(loginBlue)  # Registrando a instância da classe Blueprint do controlador login_controller
+
 @app.route('/')  # Definindo a rota raiz da aplicação
 def index():
-    return redirect(url_for('login'))  # Redirecionando para a página de login
+    return redirect(url_for('loginBlue.login'))  # Redirecionando para a página de login

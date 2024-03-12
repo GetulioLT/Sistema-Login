@@ -1,10 +1,10 @@
 # app/controllers/cadastro_controller.py
-from flask import request, redirect, url_for
-from app import app
+from flask import Blueprint, request, redirect, url_for
 import requests
 
+cadastroBlue = Blueprint("cadastroBlue", __name__)
 
-@app.route("/cadastro-in", methods=["POST"])
+@cadastroBlue.route("/cadastro-in", methods=["POST"])
 def cadastro_in():
     email = request.form["email"]
     password = request.form["password"]
@@ -19,7 +19,7 @@ def cadastro_in():
     try:
         cadastro_response.json()["email"]
         # Redirecionando para a rota '/login' se o cadastro for bem-sucedido
-        return redirect(url_for('login'))  
+        return redirect(url_for('loginBlue.login'))  
     except Exception as e:
         # Redirecionando para a rota '/cadastro' se o cadastro falhar
-        return redirect(url_for('cadastro'))  
+        return redirect(url_for('cadastroBlue.cadastro'))  
